@@ -1,0 +1,25 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+configMapGenerator:
+- name: user-auth-service-configmap
+  envs:
+  - .env
+  behavior: merge
+kind: Kustomization
+labels:
+- pairs:
+    app.kubernetes.io/version: 
+namePrefix: autopush-
+namespace: autopush
+patches:
+- path: ingress-patch.yaml
+  target:
+    kind: Ingress
+resources:
+  - ../../base
+
+components:
+  - ../../components/ingress
+
+images:
+- name: me-west1-docker.pkg.dev/koala-ops-demo-373407/koala-repo/user-auth-service
+  newTag: 

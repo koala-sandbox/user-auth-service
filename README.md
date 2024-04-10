@@ -1,35 +1,49 @@
-# Flask App
+# user-auth-service
 
-## Requirements
+This repo was created with [KoalaOps](https://app.koalaops.com/)
 
-Python 3.10.0
+## Description
 
-Project is ready to work with either "pipenv" (Pipfile) or "pip" (requirements.txt) - choose whatever suites you best. 
+An example auth service
 
-Please note, Github Actions flows rely on requirements.txt so in case you go with "pipenv" please make sure to run the command below after every `Pipfile` change.
-
-```
-pipenv run pip freeze > requirements.txt
-```
-
-## Install and Run
+## How to run locally?
 
 ```
-pipenv install
-pipenv run python run.py
+python3 -m venv venv && source venv/bin/activate;
+pip3 install -r requirements.txt;
+python3 run.py
 ```
 
-Application will be available at:
-
-	http://localhost:5000
-
-## Unit tests
-
-Run:
+## How to run with Docker?
 
 ```
-pipenv run python -m unittest tests/test_example.py
+docker build -t user-auth-service:latest .
+docker run -p:5030:8080 user-auth-service:latest
 ```
 
-## App Configuration
-All configuration is in: `configuration.py`
+Server will listen at http://localhost:5030
+
+## K8s Configuation and Deployment
+
+On service creation Koala created for you 3 k8s resources to use:
+
+- deployment.yaml
+- service.yaml
+- ingress.yaml
+
+Those are located in the [deploy](deploy) directory and should be applied with kustomize. For example:
+
+### In Production run: 
+
+```
+cd deploy
+kubectl apply -k overlays/prod
+```
+
+### In Dev run: 
+
+```
+cd deploy
+kubectl apply -k overlays/dev
+```
+

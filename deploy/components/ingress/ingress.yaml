@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+  creationTimestamp: null
+  name: user-auth-service-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: user-auth-service.cluster.koalaops.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: user-auth-service-service
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - user-auth-service.cluster.koalaops.com
+    secretName: user-auth-service-tls-cert
+status:
+  loadBalancer: {}
