@@ -82,7 +82,7 @@ Port = 8080
   IssuerContactEmail = "roylibman@gmail.com"
 
 [Metrics]
-  Collector = ""
+  Collector = "gmp"
   [Metrics.Endpoint]
     Path = ""
     Port = 0
